@@ -1,0 +1,102 @@
+.home {
+  min-height: 100vh;
+  background: #f7faf8;
+  color: #17251c;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 8%;
+  background: white;
+}
+
+.logo {
+  font-size: 28px;
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #17251c;
+  font-weight: 500;
+}
+
+.hero {
+  padding: 100px 8%;
+  background: #e9f5ed;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.tagline {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: 64px;
+  line-height: 1.05;
+  margin: 20px 0;
+}
+
+.hero-text {
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.hero-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 28px;
+  background: #20844a;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.how-it-works {
+  padding: 80px 8%;
+  text-align: center;
+  background: white;
+}
+
+.how-it-works h2 {
+  font-size: 38px;
+  margin-bottom: 50px;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.step {
+  max-width: 280px;
+  padding: 30px;
+}
+
+.step-icon {
+  font-size: 45px;
+}
+
+.step h3 {
+  font-size: 22px;
+}
+
+.step p {
+  line-height: 1.6;
+  color: #59655d;
+}

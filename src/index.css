@@ -1,0 +1,42 @@
+@import './styles/tokens.css';
+
+/* Global resets & app container */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--fl-bg);
+  color: var(--fl-text);
+  font-family: var(--fl-font);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Animation utilities */
+.page-animate {
+  animation: fl-fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Form input base styling */
+.fl-input, .fl-select, .fl-textarea {
+  font-family: var(--fl-font);
+  font-size: var(--fl-text-sm);
+  color: var(--fl-text-heading);
+  background: var(--fl-bg-raised);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius-md);
+  padding: 0.65rem 0.85rem;
+  transition: border-color var(--fl-transition-fast), box-shadow var(--fl-transition-fast);
+  outline: none;
+  width: 100%;
+}
+
+.fl-input:focus, .fl-select:focus, .fl-textarea:focus {
+  border-color: var(--fl-primary);
+  box-shadow: 0 0 0 3px var(--fl-focus-ring);
+}

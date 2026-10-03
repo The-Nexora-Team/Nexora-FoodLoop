@@ -1,0 +1,119 @@
+.listings-page {
+  min-height: 100vh;
+  background: #f5f7f6;
+  color: #17251c;
+}
+
+.listings-nav {
+  height: 70px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #e5e9e6;
+}
+
+.listings-nav h2 {
+  margin: 0;
+}
+
+.listings-nav a {
+  text-decoration: none;
+  color: #17251c;
+}
+
+.listings-content {
+  padding: 50px 8%;
+}
+
+.listings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listings-header p {
+  color: #20844a;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.listings-header h1 {
+  font-size: 40px;
+  margin: 10px 0;
+}
+
+.listings-header span {
+  color: #667169;
+}
+
+.add-listing-button {
+  padding: 14px 22px;
+  background: #20844a;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.listings {
+  margin-top: 40px;
+}
+
+.listing-card {
+  background: white;
+  padding: 25px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #e5e9e6;
+}
+
+.listing-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listing-info h2 {
+  margin: 0 0 8px;
+}
+
+.listing-info p {
+  margin: 0 0 8px;
+  color: #667169;
+}
+
+.listing-info span {
+  font-size: 14px;
+  color: #667169;
+}
+
+.listing-status {
+  padding: 7px 14px;
+  border-radius: 20px;
+  background: #e9f5ed;
+  color: #20844a;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.listing-notes {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e5e9e6;
+  color: #667169;
+}
+
+.empty-list {
+  background: white;
+  padding: 60px;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid #e5e9e6;
+}
+
+.empty-list p {
+  color: #667169;
+}

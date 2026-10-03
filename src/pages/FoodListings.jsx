@@ -1,98 +1,43 @@
-import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
-import "./FoodListings.css"
+/* FoodListings — full live marketplace view of all surplus batches */
 
-function FoodListings() {
+import { Link } from 'react-router-dom';
+import { useFoodLoop } from '../context/FoodLoopContext.jsx';
+import ListingCard from '../components/ListingCard.jsx';
 
-  const [foods, setFoods] = useState([])
-
-  useEffect(() => {
-    const savedFoods =
-      JSON.parse(localStorage.getItem("foodListings")) || []
-
-    setFoods(savedFoods)
-  }, [])
+export default function FoodListings() {
+  const { state } = useFoodLoop();
+  const listings = state.listings || [];
 
   return (
-    <div className="listings-page">
+    <div className="fl-container page-animate" style={{ padding: '2rem 1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+        <div>
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--fl-gold-dark)', letterSpacing: '0.05em' }}>SURPLUS MARKETPLACE</p>
+          <h1 style={{ fontSize: '1.75rem', color: 'var(--fl-text-heading)', margin: '4px 0' }}>All Surplus Food Listings</h1>
+          <p style={{ color: 'var(--fl-text-muted)' }}>
+            Real-time surplus batches stepping down the income ladder across Colombo.
+          </p>
+        </div>
 
-      <nav className="listings-nav">
-        <h2>FoodLoop</h2>
-
-        <Link to="/dashboard">
-          Dashboard
+        <Link to="/restaurant/post" className="fl-btn fl-btn-primary">
+          + Post New Surplus
         </Link>
-      </nav>
+      </div>
 
-      <main className="listings-content">
-
-        <div className="listings-header">
-          <div>
-            <p>FOOD MANAGEMENT</p>
-            <h1>Food Listings</h1>
-            <span>
-              View surplus food currently registered in FoodLoop.
-            </span>
-          </div>
-
-          <Link to="/surplus-food" className="add-listing-button">
-            + Add Food
+      {listings.length === 0 ? (
+        <div className="fl-card" style={{ textAlign: 'center', padding: '3.5rem 1rem' }}>
+          <p style={{ fontSize: '1.125rem', color: 'var(--fl-text-muted)', marginBottom: '1rem' }}>No listings in the network.</p>
+          <Link to="/restaurant/post" className="fl-btn fl-btn-secondary">
+            Post Surplus Food
           </Link>
         </div>
-
-        <div className="listings">
-
-          {foods.length === 0 ? (
-
-            <div className="empty-list">
-              <h2>No food listings yet</h2>
-              <p>
-                Register surplus food to see it here.
-              </p>
-            </div>
-
-          ) : (
-
-            foods.map((food) => (
-
-              <div className="listing-card" key={food.id}>
-
-                <div className="listing-info">
-
-                  <div>
-                    <h2>{food.foodName}</h2>
-
-                    <p>
-                      {food.quantity} {food.unit}
-                    </p>
-
-                    <span>
-                      {food.category}
-                    </span>
-                  </div>
-
-                  <div className="listing-status">
-                    {food.status}
-                  </div>
-
-                </div>
-
-                <div className="listing-notes">
-                  {food.notes}
-                </div>
-
-              </div>
-
-            ))
-
-          )}
-
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem' }}>
+          {listings.map((item) => (
+            <ListingCard key={item.id} listing={item} />
+          ))}
         </div>
-
-      </main>
-
+      )}
     </div>
-  )
+  );
 }
-
-export default FoodListings

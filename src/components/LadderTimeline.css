@@ -1,0 +1,95 @@
+.ladder-timeline {
+  width: 100%;
+  padding: 8px 0;
+}
+
+.ladder-track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  gap: 12px;
+}
+
+.ladder-node {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ladder-node-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fl-bg-sunken);
+  border: 2px solid var(--fl-border);
+  transition: all var(--fl-transition);
+  margin-bottom: 6px;
+}
+
+.ladder-node.status-active .ladder-node-circle {
+  border-color: var(--fl-gold);
+  background: #fff;
+  box-shadow: 0 0 12px rgba(242, 176, 30, 0.4);
+  transform: scale(1.1);
+}
+
+.ladder-node.status-completed .ladder-node-circle {
+  border-color: var(--fl-green);
+  background: var(--fl-urgency-safe-bg);
+}
+
+.ladder-node.status-passed .ladder-node-circle {
+  border-color: var(--fl-border);
+  opacity: 0.5;
+}
+
+.ladder-node.status-upcoming .ladder-node-circle {
+  opacity: 0.4;
+}
+
+.ladder-icon {
+  font-size: 16px;
+}
+
+.ladder-node-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ladder-node-label {
+  font-size: var(--fl-text-xs);
+  font-weight: 700;
+  color: var(--fl-text-heading);
+}
+
+.ladder-node.status-active .ladder-node-label {
+  color: var(--fl-gold-dark);
+}
+
+.ladder-node-sub {
+  font-size: 11px;
+  color: var(--fl-text-muted);
+}
+
+.ladder-connector {
+  position: absolute;
+  top: 18px;
+  left: 60%;
+  width: 80%;
+  height: 2px;
+  background: var(--fl-border);
+  z-index: -1;
+}
+
+.ladder-node.status-completed .ladder-connector {
+  background: var(--fl-green);
+}

@@ -1,0 +1,67 @@
+.expiry-clock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--fl-radius-full);
+  font-family: var(--fl-font-mono);
+  font-size: var(--fl-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all var(--fl-transition);
+}
+
+.expiry-clock-badge.urgency-safe {
+  background: var(--fl-urgency-safe-bg);
+  color: var(--fl-urgency-safe);
+  border: 1px solid rgba(31, 138, 91, 0.3);
+}
+
+.expiry-clock-badge.urgency-safe .clock-pulse-dot {
+  background: var(--fl-urgency-safe);
+}
+
+.expiry-clock-badge.urgency-warning {
+  background: var(--fl-urgency-warning-bg);
+  color: var(--fl-urgency-warning);
+  border: 1px solid rgba(232, 150, 12, 0.3);
+}
+
+.expiry-clock-badge.urgency-warning .clock-pulse-dot {
+  background: var(--fl-urgency-warning);
+  animation: fl-pulse 1.2s infinite;
+}
+
+.expiry-clock-badge.urgency-critical {
+  background: var(--fl-urgency-critical-bg);
+  color: var(--fl-urgency-critical);
+  border: 1px solid rgba(214, 69, 47, 0.4);
+  box-shadow: 0 0 10px rgba(214, 69, 47, 0.2);
+}
+
+.expiry-clock-badge.urgency-critical .clock-pulse-dot {
+  background: var(--fl-urgency-critical);
+  animation: fl-pulse 0.6s infinite;
+}
+
+.expiry-clock-badge.is-expired {
+  background: var(--fl-bg-sunken);
+  color: var(--fl-text-muted);
+  border: 1px solid var(--fl-border);
+}
+
+.clock-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.clock-icon {
+  font-size: 11px;
+}
+
+.expiry-clock-badge.compact {
+  padding: 2px 6px;
+  font-size: 11px;
+}

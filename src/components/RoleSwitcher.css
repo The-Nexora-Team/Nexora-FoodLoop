@@ -1,0 +1,132 @@
+.role-switcher {
+  position: relative;
+}
+
+.role-switcher-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--fl-bg-sunken);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius-full);
+  cursor: pointer;
+  font-family: var(--fl-font);
+  font-size: var(--fl-text-sm);
+  color: var(--fl-text);
+  transition: all var(--fl-transition-fast);
+}
+
+.role-switcher-trigger:hover {
+  background: var(--fl-bg-raised);
+  border-color: var(--fl-text-muted);
+}
+
+.role-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.role-name {
+  font-weight: 600;
+  color: var(--fl-text-heading);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-badge {
+  padding: 2px 8px;
+  background: var(--fl-bg);
+  border-radius: var(--fl-radius-full);
+  font-size: var(--fl-text-xs);
+  font-weight: 600;
+  color: var(--fl-text-muted);
+}
+
+.role-chevron {
+  transition: transform var(--fl-transition-fast);
+  color: var(--fl-text-muted);
+}
+
+.role-switcher-trigger[aria-expanded="true"] .role-chevron {
+  transform: rotate(180deg);
+}
+
+.role-switcher-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--fl-bg-raised);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius-lg);
+  box-shadow: 0 8px 30px var(--fl-shadow-lg);
+  list-style: none;
+  padding: 8px;
+  z-index: 100;
+  animation: fl-fadeIn 0.15s ease;
+}
+
+.role-switcher-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px;
+}
+
+.role-group-label {
+  padding: 8px 12px 4px;
+  font-size: var(--fl-text-xs);
+  font-weight: 700;
+  color: var(--fl-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: var(--fl-radius-md);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--fl-font);
+  transition: background var(--fl-transition-fast);
+}
+
+.role-option:hover {
+  background: var(--fl-bg-sunken);
+}
+
+.role-option.active {
+  background: var(--fl-bg-sunken);
+  outline: 2px solid var(--fl-primary);
+  outline-offset: -2px;
+}
+
+.role-dot-sm {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.role-option-name {
+  font-size: var(--fl-text-sm);
+  font-weight: 600;
+  color: var(--fl-text-heading);
+}
+
+.role-option-sub {
+  font-size: var(--fl-text-xs);
+  color: var(--fl-text-muted);
+}

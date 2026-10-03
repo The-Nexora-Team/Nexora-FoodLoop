@@ -1,32 +1,79 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { FoodLoopProvider } from './context/FoodLoopContext.jsx';
 
-import Home from "./pages/Home"
-import Login from "./pages/Login"
-import RestaurantDashboard from "./pages/RestaurantDashboard"
-import SurplusFood from "./pages/SurplusFood"
-import FoodListings from "./pages/FoodListings"
-import ImpactDashboard from "./pages/ImpactDashboard"
+import AppLayout from './components/AppLayout.jsx';
+import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
 
-function App() {
+// Restaurant Pages
+import RestaurantDashboard from './pages/restaurant/RestaurantDashboard.jsx';
+import PostSurplus from './pages/restaurant/PostSurplus.jsx';
+import ListingDetail from './pages/restaurant/ListingDetail.jsx';
+import WasteReport from './pages/restaurant/WasteReport.jsx';
+import DonationReceipt from './pages/restaurant/DonationReceipt.jsx';
+
+// Receiver Pages
+import ReceiverDashboard from './pages/receiver/ReceiverDashboard.jsx';
+import IncomingOffers from './pages/receiver/IncomingOffers.jsx';
+import AcceptedHistory from './pages/receiver/AcceptedHistory.jsx';
+
+// Volunteer Pages
+import VolunteerDashboard from './pages/volunteer/VolunteerDashboard.jsx';
+import PickupBoard from './pages/volunteer/PickupBoard.jsx';
+import DeliveryConfirm from './pages/volunteer/DeliveryConfirm.jsx';
+
+// Admin, Impact, Map
+import DemoControl from './pages/admin/DemoControl.jsx';
+import ImpactDashboard from './pages/ImpactDashboard.jsx';
+import MapPage from './pages/MapPage.jsx';
+import FoodListings from './pages/FoodListings.jsx';
+
+export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <FoodLoopProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<RestaurantDashboard />} />
-        <Route path="/surplus-food" element={<SurplusFood />} />
-        <Route path="/food-listings" element={<FoodListings />} />
-        <Route path="/impact" element={<ImpactDashboard />} />
+          {/* App Layout (Role & Auth Protected) */}
+          <Route element={<AppLayout />}>
+            {/* Restaurant */}
+            <Route path="/restaurant" element={<RestaurantDashboard />} />
+            <Route path="/restaurant/post" element={<PostSurplus />} />
+            <Route path="/restaurant/listings" element={<FoodListings />} />
+            <Route path="/restaurant/listing/:id" element={<ListingDetail />} />
+            <Route path="/restaurant/report" element={<WasteReport />} />
+            <Route path="/restaurant/receipt/:id" element={<DonationReceipt />} />
 
-      </Routes>
-    </BrowserRouter>
-  )
+            {/* Receiver */}
+            <Route path="/receiver" element={<ReceiverDashboard />} />
+            <Route path="/receiver/offers" element={<IncomingOffers />} />
+            <Route path="/receiver/history" element={<AcceptedHistory />} />
+
+            {/* Volunteer */}
+            <Route path="/volunteer" element={<VolunteerDashboard />} />
+            <Route path="/volunteer/pickups" element={<PickupBoard />} />
+            <Route path="/volunteer/delivery/:id" element={<DeliveryConfirm />} />
+
+            {/* Admin */}
+            <Route path="/admin" element={<DemoControl />} />
+
+            {/* Shared */}
+            <Route path="/impact" element={<ImpactDashboard />} />
+            <Route path="/map" element={<MapPage />} />
+          </Route>
+
+          {/* Backward compatibility routes */}
+          <Route path="/dashboard" element={<Navigate to="/restaurant" replace />} />
+          <Route path="/surplus-food" element={<Navigate to="/restaurant/post" replace />} />
+          <Route path="/food-listings" element={<Navigate to="/restaurant/listings" replace />} />
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </FoodLoopProvider>
+  );
 }
-
-export default App

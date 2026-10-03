@@ -1,0 +1,74 @@
+.safety-checklist {
+  background: var(--fl-bg-sunken);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius-md);
+  padding: var(--fl-space-md);
+  margin-top: var(--fl-space-md);
+}
+
+.safety-header h4 {
+  font-size: var(--fl-text-sm);
+  color: var(--fl-text-heading);
+  margin-bottom: 2px;
+}
+
+.safety-header p {
+  font-size: var(--fl-text-xs);
+  color: var(--fl-text-muted);
+  margin-bottom: var(--fl-space-md);
+}
+
+.safety-item {
+  margin-bottom: var(--fl-space-sm);
+}
+
+.safety-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--fl-text-xs);
+  color: var(--fl-text);
+  cursor: pointer;
+}
+
+.safety-label input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: var(--fl-green);
+}
+
+.safety-allergens-section {
+  margin-top: var(--fl-space-md);
+  border-top: 1px dashed var(--fl-border);
+  padding-top: var(--fl-space-sm);
+}
+
+.section-title {
+  display: block;
+  font-size: var(--fl-text-xs);
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--fl-text-heading);
+}
+
+.allergen-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.allergen-pill {
+  border: 1px solid var(--fl-border);
+  background: var(--fl-bg-raised);
+  color: var(--fl-text);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--fl-radius-full);
+  cursor: pointer;
+  transition: all var(--fl-transition-fast);
+}
+
+.allergen-pill.active {
+  background: var(--fl-teal);
+  color: #fff;
+  border-color: var(--fl-teal);
+}

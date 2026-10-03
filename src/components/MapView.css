@@ -1,0 +1,250 @@
+.map-view-container {
+  padding: var(--fl-space-md);
+  margin-top: var(--fl-space-md);
+}
+
+.map-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: var(--fl-space-md);
+}
+
+.map-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: var(--fl-text-xs);
+  color: var(--fl-text-heading);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.restaurant-dot { background: var(--fl-gold); }
+.receiver-dot { background: var(--fl-green); }
+.volunteer-dot { background: var(--fl-teal-light); }
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--fl-urgency-safe-bg);
+  color: var(--fl-green);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--fl-radius-full);
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fl-green);
+  animation: fl-pulse 1s infinite;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.leaflet-wrapper {
+  width: 100%;
+  position: relative;
+  border-radius: var(--fl-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--fl-border);
+}
+
+/* Custom Marker Pin */
+.custom-map-marker {
+  background: transparent;
+  border: none;
+}
+
+.marker-pin {
+  width: 36px;
+  height: 36px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 2px solid #fff;
+  position: relative;
+}
+
+.marker-emoji {
+  transform: rotate(45deg);
+  font-size: 17px;
+}
+
+.marker-restaurant .marker-pin {
+  background: var(--fl-gold);
+}
+
+.marker-receiver .marker-pin {
+  background: var(--fl-green);
+}
+
+.marker-volunteer .marker-pin {
+  background: var(--fl-teal);
+}
+
+.marker-badge-pulse {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  transform: rotate(45deg);
+  background: var(--fl-danger);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  animation: fl-pulse 0.8s infinite;
+}
+
+.has-active-food .marker-pin {
+  border-color: var(--fl-danger);
+  box-shadow: 0 0 16px rgba(214, 69, 47, 0.5);
+}
+
+/* Map Popups */
+.map-popup-card {
+  padding: 4px;
+  color: var(--fl-ink);
+  font-family: var(--fl-font);
+  min-width: 210px;
+  max-width: 280px;
+}
+
+.map-food-box {
+  background: var(--fl-bg-sunken);
+  border-radius: var(--fl-radius-md);
+  padding: 8px;
+  margin-top: 8px;
+  border: 1px solid var(--fl-border);
+}
+
+.map-food-item {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--fl-border);
+}
+
+.map-food-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.map-expiry-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--fl-danger);
+  background: var(--fl-urgency-critical-bg);
+  padding: 2px 6px;
+  border-radius: var(--fl-radius-full);
+}
+
+/* Active Moving Courier Pin */
+.marker-active-courier {
+  background: transparent;
+  border: none;
+}
+
+.active-courier-pin {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fl-teal);
+  border: 3px solid #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.courier-pulse-ring {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--fl-green);
+  animation: fl-pulse 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  pointer-events: none;
+}
+
+/* Real-Time Live Order Tracking Bottom Panel */
+.map-live-tracking-panel {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--fl-border);
+  box-shadow: 0 8px 24px var(--fl-shadow-lg);
+  border-radius: var(--fl-radius-lg);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.live-tracking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.live-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--fl-green-dark);
+  background: var(--fl-urgency-safe-bg);
+  padding: 2px 8px;
+  border-radius: var(--fl-radius-full);
+}
+
+.tracking-status-col h5 {
+  color: var(--fl-text-heading);
+}
+
+.tracking-meta-col {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+

@@ -13,9 +13,13 @@ export default function Home() {
       {/* Top Navbar */}
       <nav className="navbar">
         <div className="logo-container">
-          <span className="logo-icon">🔄</span>
-          <h2 className="logo">FoodLoop</h2>
-        </div>
+        <img
+          src="/images/logo-icon.png"
+          alt="FoodLoop Logo"
+          className="logo-icon"
+        />
+        <h2 className="logo">FoodLoop</h2>
+      </div>
 
         <div className="nav-links">
           <Link to="/">Home</Link>

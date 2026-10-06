@@ -72,9 +72,13 @@ export default function AppLayout() {
       <header className="app-nav">
         <div className="app-nav-inner">
           <Link to="/" className="app-logo">
-            <span className="logo-icon">🔄</span>
-            <span className="logo-text">FoodLoop</span>
-          </Link>
+          <img
+            src="/images/logo-icon.png"
+            alt="FoodLoop Logo"
+            className="logo-icon"
+          />
+          <span className="logo-text">FoodLoop</span>
+        </Link>
 
           <nav className="app-nav-links" aria-label="Main navigation">
             {navItems.map((item) => (

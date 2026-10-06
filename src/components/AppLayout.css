@@ -33,10 +33,13 @@
   flex-shrink: 0;
 }
 
-.logo-icon {
-  font-size: 24px;
-}
 
+.logo-icon {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+}
 .logo-text {
   font-size: var(--fl-text-xl);
   font-weight: 700;

@@ -214,7 +214,12 @@ export default function Login() {
     <div className="login-page">
       <div className="login-container">
         <Link to="/" className="login-logo">
-          <span className="login-logo-icon">🔄</span>
+          <img
+            src="/images/logo-icon.png"
+            alt="FoodLoop Logo"
+            className="logo-icon"
+          />
+
           <span className="login-logo-text">FoodLoop</span>
         </Link>
 

@@ -66,40 +66,34 @@ The test suite validates the matching engine, dynamic pricing floor, ladder tran
 ## 📁 Project Structure
 
 ```
-src/
-├── components/          # Reusable UI components
-│   ├── AppLayout.jsx    # Sticky navigation with role switcher & demo clock
-│   ├── RoleSwitcher.jsx # Instant role switching modal
-│   ├── ExpiryClock.jsx  # Green → Amber → Red urgency countdown badge
-│   ├── LadderTimeline.jsx # Visual income ladder node progression
-│   ├── ListingCard.jsx  # Surplus batch card with dynamic pricing
-│   ├── MatchPanel.jsx   # Multi-factor score breakdown and escalation controls
-│   ├── HandoverLog.jsx  # Chain-of-custody verification
-│   ├── SafetyChecklist.jsx # Food safety and allergen checklist
-│   ├── StatCard.jsx     # Reusable dashboard metric card
-│   └── ImpactCounter.jsx# Smooth animated number counter
-├── context/
-│   ├── FoodLoopContext.jsx # Provider with BroadcastChannel sync
-│   ├── reducer.js       # Pure state transitions
-│   ├── seed.js          # Sri Lankan demo seed data (Colombo 01-07)
-│   └── clock.js         # Central demo simulation clock
-├── pages/
-│   ├── Home.jsx         # Landing page with ladder graphic & impact counters
-│   ├── Login.jsx        # One-click demo role selector
-│   ├── restaurant/      # Dashboard, PostSurplus, ListingDetail, WasteReport, DonationReceipt
-│   ├── receiver/        # Dashboard, IncomingOffers, AcceptedHistory
-│   ├── volunteer/       # Dashboard, PickupBoard, DeliveryConfirm
-│   ├── admin/           # DemoControl (speed multipliers & seed reset)
-│   ├── ImpactDashboard.jsx # Environmental & financial metrics with Recharts
-│   └── MapPage.jsx      # Geo rescue network map
-├── utils/
-│   ├── constants.js     # Exact constants and weights from spec
-│   ├── matching.js      # Hard filters and weighted scoring engine
-│   ├── wasteStrategy.js # Dynamic discount, price floor, ladder decision, prep forecast
-│   ├── impact.js        # CO2e, meal conversion, and money recovery math
-│   └── format.js        # Currency (LKR), duration, and distance formatters
-└── styles/
-    └── tokens.css       # FoodLoop design tokens & accessible dark mode
+Nexora-FoodLoop/
+├── frontend/                     # All Frontend React 19 + Vite code
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/                # Dashboards, Login (with eye toggle), Admin
+│   │   ├── services/api.js       # Frontend API client
+│   │   └── utils/
+│   ├── public/
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+│
+├── backend/                      # Express + MongoDB/Hybrid Backend
+│   ├── src/
+│   │   ├── config/db.js          # Non-blocking MongoDB / In-memory connection
+│   │   ├── controllers/          # Auth, Admin, Listings, Matches, Handovers
+│   │   ├── data/store.js         # Preloaded Sri Lankan demo data store
+│   │   ├── middleware/auth.js    # JWT & RBAC role guards
+│   │   ├── models/               # Mongoose models (User, Listing, Match, etc.)
+│   │   ├── routes/               # REST API endpoints
+│   │   ├── services/             # Matching engine (haversine + weighted scoring)
+│   │   └── server.js             # Server entry point (Port 5000)
+│   ├── .env
+│   ├── package.json
+│   └── README.md
+│
+└── package.json                  # Root monorepo orchestrator
 ```
 
 ---

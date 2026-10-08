@@ -108,6 +108,14 @@ export default function App() {
               }
             />
             <Route
+              path="/restaurant/receipt"
+              element={
+                <RoleRoute allowedRoles={[ROLES.RESTAURANT, ROLES.ADMIN]}>
+                  <DonationReceipt />
+                </RoleRoute>
+              }
+            />
+            <Route
               path="/restaurant/receipt/:id"
               element={
                 <RoleRoute allowedRoles={[ROLES.RESTAURANT, ROLES.ADMIN]}>

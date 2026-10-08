@@ -12,7 +12,8 @@ const NAV_ITEMS = {
     { to: '/restaurant', label: 'Dashboard' },
     { to: '/restaurant/post', label: 'Post Surplus' },
     { to: '/restaurant/listings', label: 'Listings' },
-    { to: '/restaurant/report', label: 'Report' },
+    { to: '/restaurant/report', label: 'Savings Audit' },
+    { to: '/restaurant/receipt', label: 'Tax Receipts' },
   ],
   [ROLES.RECEIVER]: [
     { to: '/receiver', label: 'Dashboard' },

@@ -168,12 +168,18 @@
   border: 1px solid #e5e7eb;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .printable-report h1,
 .printable-report h2,
-.printable-report h3 {
+.printable-report h3,
+.printable-report h4 {
   color: #111827;
+}
+
+.report-section {
+  margin-bottom: 2rem;
 }
 
 .report-header {
@@ -189,13 +195,13 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1.5rem;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 .report-table th,
 .report-table td {
   border: 1px solid #d1d5db;
-  padding: 8px 12px;
+  padding: 8px 10px;
   text-align: left;
 }
 
@@ -205,30 +211,87 @@
   color: #374151;
 }
 
-/* Print Media Specific Overrides */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-
-  .printable-report,
-  .printable-report * {
-    visibility: visible;
-  }
-
-  .printable-report {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 20mm;
-    border: none;
-    box-shadow: none;
-  }
-
-  .no-print {
-    display: none !important;
-  }
+/* Explicit page break divider for multi-page PDF generation */
+.report-page-break {
+  page-break-before: always;
+  break-before: page;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #cbd5e1;
 }
 
+/* Print Media Specific Overrides — Multi-page enabled without clipping */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 15mm 15mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Hide app navigation, tabs, action buttons, headers */
+  .app-nav,
+  .no-print,
+  .skip-link,
+  .admin-header,
+  .admin-tabs,
+  .admin-modal-overlay,
+  .speed-control,
+  .theme-toggle-btn {
+    display: none !important;
+  }
+
+  .app-layout,
+  .app-main,
+  .fl-container,
+  .admin-command-page {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* Report container MUST BE static to allow continuous multi-page pagination */
+  .printable-report {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  .report-page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+    margin-top: 0 !important;
+    padding-top: 15mm !important;
+    border-top: none !important;
+  }
+
+  .report-table {
+    page-break-inside: auto !important;
+    width: 100% !important;
+  }
+
+  .report-table tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+
+  .report-table thead {
+    display: table-header-group !important;
+  }
+}

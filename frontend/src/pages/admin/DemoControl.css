@@ -1,0 +1,234 @@
+/* DemoControl & Admin Command Center Styles */
+
+.admin-command-page {
+  padding: 2rem 1rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--fl-border);
+  padding-bottom: 8px;
+  overflow-x: auto;
+}
+
+.admin-tab-btn {
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--fl-radius-md);
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--fl-text-muted);
+  transition: all var(--fl-transition-fast);
+  white-space: nowrap;
+}
+
+.admin-tab-btn:hover {
+  color: var(--fl-text-heading);
+  background: var(--fl-bg-sunken);
+}
+
+.admin-tab-btn.active {
+  background: var(--fl-teal);
+  color: #fff;
+}
+
+/* Charts Grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: var(--fl-bg-raised);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius-xl);
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fl-text-heading);
+  margin-bottom: 4px;
+}
+
+.chart-desc {
+  font-size: 0.8125rem;
+  color: var(--fl-text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Modal Styles */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.admin-modal-content {
+  background: var(--fl-bg-raised);
+  border-radius: var(--fl-radius-xl);
+  border: 1px solid var(--fl-border);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.75rem;
+  position: relative;
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--fl-border);
+  padding-bottom: 0.75rem;
+}
+
+.admin-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--fl-text-muted);
+}
+
+.admin-modal-close:hover {
+  color: var(--fl-text-heading);
+}
+
+/* Detail key-value grid */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.detail-item {
+  background: var(--fl-bg-sunken);
+  padding: 10px 14px;
+  border-radius: var(--fl-radius-md);
+  border: 1px solid var(--fl-border);
+}
+
+.detail-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--fl-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.detail-val {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fl-text-heading);
+}
+
+/* Printable PDF Report Sheet */
+.printable-report {
+  background: #ffffff;
+  color: #111827;
+  padding: 2.5rem;
+  border-radius: var(--fl-radius-lg);
+  border: 1px solid #e5e7eb;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+}
+
+.printable-report h1,
+.printable-report h2,
+.printable-report h3 {
+  color: #111827;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #0f3d3e;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #d1d5db;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.report-table th {
+  background-color: #f3f4f6;
+  font-weight: 700;
+  color: #374151;
+}
+
+/* Print Media Specific Overrides */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .printable-report,
+  .printable-report * {
+    visibility: visible;
+  }
+
+  .printable-report {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20mm;
+    border: none;
+    box-shadow: none;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+

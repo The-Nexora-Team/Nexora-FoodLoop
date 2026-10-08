@@ -8,6 +8,11 @@ import {
   triggerDemoScenario,
   resetDemoState,
   getSystemInspection,
+  getAllClients,
+  createClient,
+  updateClient,
+  deleteClient,
+  getAnalytics,
 } from '../controllers/adminController.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
 
@@ -17,13 +22,20 @@ const router = Router();
 router.use(requireAuth);
 router.use(requireRole('admin'));
 
-// Platform Analytics & Stats
+// Platform Analytics & Stats & Diagrams
 router.get('/stats', getPlatformStats);
+router.get('/analytics', getAnalytics);
 
 // User Management
 router.get('/users', getAllUsers);
 router.patch('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
+
+// Client CRUD (Restaurants, Receivers, Volunteers)
+router.get('/clients', getAllClients);
+router.post('/clients', createClient);
+router.patch('/clients/:id', updateClient);
+router.delete('/clients/:id', deleteClient);
 
 // Demo & Hackathon Controls
 router.post('/clock/speed', setClockSpeed);
@@ -34,4 +46,3 @@ router.post('/demo/reset', resetDemoState);
 router.get('/inspection', getSystemInspection);
 
 export default router;
-

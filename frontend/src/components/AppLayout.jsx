@@ -1,4 +1,4 @@
-/* AppLayout — shared layout with nav + role switcher + dark mode */
+/* AppLayout — shared layout with nav + role isolation + dark mode */
 
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, Outlet } from 'react-router-dom';
@@ -24,8 +24,22 @@ const NAV_ITEMS = {
     { to: '/volunteer/pickups', label: 'Pickups' },
   ],
   [ROLES.ADMIN]: [
-    { to: '/admin', label: 'Demo Control' },
+    { to: '/admin', label: 'Admin Command' },
   ],
+};
+
+const ROLE_COLORS = {
+  [ROLES.RESTAURANT]: 'var(--fl-gold)',
+  [ROLES.RECEIVER]: 'var(--fl-green)',
+  [ROLES.VOLUNTEER]: 'var(--fl-teal-light)',
+  [ROLES.ADMIN]: 'var(--fl-red)',
+};
+
+const ROLE_LABELS = {
+  [ROLES.RESTAURANT]: 'Restaurant',
+  [ROLES.RECEIVER]: 'Charity / Shelter',
+  [ROLES.VOLUNTEER]: 'Volunteer',
+  [ROLES.ADMIN]: 'Platform Admin',
 };
 
 export default function AppLayout() {
@@ -54,6 +68,7 @@ export default function AppLayout() {
     return null;
   }
 
+  // Strictly show navigation for the logged-in role only
   const navItems = [
     ...(NAV_ITEMS[user.role] || []),
     { to: '/impact', label: 'Impact' },
@@ -72,13 +87,13 @@ export default function AppLayout() {
       <header className="app-nav">
         <div className="app-nav-inner">
           <Link to="/" className="app-logo">
-          <img
-            src="/images/logo-icon.png"
-            alt="FoodLoop Logo"
-            className="logo-icon"
-          />
-          <span className="logo-text">FoodLoop</span>
-        </Link>
+            <img
+              src="/images/logo-icon.png"
+              alt="FoodLoop Logo"
+              className="logo-icon"
+            />
+            <span className="logo-text">FoodLoop</span>
+          </Link>
 
           <nav className="app-nav-links" aria-label="Main navigation">
             {navItems.map((item) => (
@@ -89,19 +104,21 @@ export default function AppLayout() {
           </nav>
 
           <div className="app-nav-right">
-            {/* Speed Simulation Control */}
-            <div className="speed-control" aria-label="Demo speed">
-              {SPEED_OPTIONS.map((s) => (
-                <button
-                  key={s}
-                  className={`speed-btn ${state.speed === s ? 'active' : ''}`}
-                  onClick={() => dispatch({ type: ACTION_TYPES.SET_SPEED, payload: s })}
-                  title={`${s}x simulation speed`}
-                >
-                  {s}x
-                </button>
-              ))}
-            </div>
+            {/* Speed Simulation Control — strictly reserved for Admin */}
+            {user.role === ROLES.ADMIN && (
+              <div className="speed-control" aria-label="Demo speed">
+                {SPEED_OPTIONS.map((s) => (
+                  <button
+                    key={s}
+                    className={`speed-btn ${state.speed === s ? 'active' : ''}`}
+                    onClick={() => dispatch({ type: ACTION_TYPES.SET_SPEED, payload: s })}
+                    title={`${s}x simulation speed`}
+                  >
+                    {s}x
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Dark Mode Toggle */}
             <button
@@ -118,14 +135,57 @@ export default function AppLayout() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '15px'
+                fontSize: '15px',
               }}
             >
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
 
-            {/* Role Switcher */}
-            <RoleSwitcher />
+            {/* Role Header Display:
+                - Regular users (Restaurant, Receiver, Volunteer) only see their locked identity pill
+                - Admin has platform switcher */}
+            {user.role === ROLES.ADMIN ? (
+              <RoleSwitcher />
+            ) : (
+              <div
+                className="user-profile-pill"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '6px 14px',
+                  background: 'var(--fl-bg-sunken)',
+                  border: '1px solid var(--fl-border)',
+                  borderRadius: 'var(--fl-radius-full)',
+                  fontSize: '0.8125rem',
+                  fontWeight: 600,
+                  color: 'var(--fl-text-heading)',
+                }}
+              >
+                <span
+                  style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: ROLE_COLORS[user.role] || 'var(--fl-teal)',
+                  }}
+                />
+                <span>{user.name}</span>
+                <span
+                  style={{
+                    fontSize: '0.6875rem',
+                    textTransform: 'uppercase',
+                    fontWeight: 700,
+                    background: 'rgba(0,0,0,0.06)',
+                    padding: '2px 6px',
+                    borderRadius: '4px',
+                    color: 'var(--fl-text-muted)',
+                  }}
+                >
+                  {ROLE_LABELS[user.role]}
+                </span>
+              </div>
+            )}
 
             {/* Sign out */}
             <button className="logout-btn" onClick={handleLogout} title="Sign out">

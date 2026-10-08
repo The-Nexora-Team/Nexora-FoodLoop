@@ -199,3 +199,198 @@ export async function getSystemInspection(req, res) {
   }
 }
 
+/**
+ * Get all ecosystem clients (Restaurants, Receivers, Volunteers) with full metrics
+ */
+export async function getAllClients(req, res) {
+  try {
+    const { clientType, search } = req.query;
+    let clients = store.getAllClients();
+
+    if (clientType) {
+      clients = clients.filter((c) => c.clientType === clientType);
+    }
+
+    if (search) {
+      const q = search.toLowerCase();
+      clients = clients.filter(
+        (c) =>
+          c.name.toLowerCase().includes(q) ||
+          c.area?.toLowerCase().includes(q) ||
+          c.email?.toLowerCase().includes(q)
+      );
+    }
+
+    return res.status(200).json({
+      success: true,
+      count: clients.length,
+      clients,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/**
+ * Create a new client (Restaurant, Receiver, or Volunteer)
+ */
+export async function createClient(req, res) {
+  try {
+    const { clientType, name, email, password, area, details = {} } = req.body;
+
+    if (!clientType || !name || !email) {
+      return res.status(400).json({
+        success: false,
+        message: 'clientType, name, and email are required.',
+      });
+    }
+
+    const userId = 'usr-' + Date.now();
+    const profileId = `${clientType.substr(0, 4)}-` + Date.now();
+
+    let createdProfile = null;
+    if (clientType === 'restaurant') {
+      createdProfile = store.addRestaurant({
+        id: profileId,
+        userId,
+        name,
+        area: area || 'Colombo 07',
+        cuisine: details.cuisine || 'Restaurant & Dining',
+        lat: details.lat || 6.9271,
+        lng: details.lng || 79.8612,
+        templates: details.templates || [],
+      });
+    } else if (clientType === 'receiver') {
+      createdProfile = store.addReceiver({
+        id: profileId,
+        userId,
+        name,
+        type: details.type || 'childrens_home',
+        area: area || 'Dehiwala',
+        lat: details.lat || 6.8563,
+        lng: details.lng || 79.865,
+        acceptedCategories: details.acceptedCategories || ['cooked', 'bakery'],
+        capacity: Number(details.capacity || 50),
+        currentNeed: Number(details.currentNeed || 80),
+        reliabilityRating: 5.0,
+        isRecycler: details.type === 'compost_feed',
+      });
+    } else if (clientType === 'volunteer') {
+      createdProfile = store.addVolunteer({
+        id: profileId,
+        userId,
+        name,
+        vehicle: details.vehicle || 'Motorbike / Scooter',
+        area: area || 'Colombo 05',
+        phone: details.phone || '077 123 4567',
+        lat: details.lat || 6.893,
+        lng: details.lng || 79.8602,
+        reliabilityRating: 5.0,
+        hoursLogged: 0,
+        totalEarnings: 0,
+        available: true,
+      });
+    }
+
+    const newUser = store.createUser({
+      id: userId,
+      name,
+      email,
+      password: password || 'password123',
+      role: clientType,
+      profileId,
+      status: 'active',
+      isVerified: true,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: `${clientType} client registered successfully.`,
+      client: { ...createdProfile, clientType, email: newUser.email, status: newUser.status },
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/**
+ * Update client details
+ */
+export async function updateClient(req, res) {
+  try {
+    const { id } = req.params;
+    const { clientType, name, area, status, ...otherUpdates } = req.body;
+
+    let updated = null;
+    if (clientType === 'restaurant' || id.startsWith('rest-')) {
+      updated = store.updateRestaurant(id, { ...(name && { name }), ...(area && { area }), ...otherUpdates });
+    } else if (clientType === 'receiver' || id.startsWith('recv-')) {
+      updated = store.updateReceiver(id, { ...(name && { name }), ...(area && { area }), ...otherUpdates });
+    } else if (clientType === 'volunteer' || id.startsWith('vol-')) {
+      updated = store.updateVolunteer(id, { ...(name && { name }), ...(area && { area }), ...otherUpdates });
+    }
+
+    if (!updated) {
+      return res.status(404).json({ success: false, message: 'Client profile not found.' });
+    }
+
+    // Update associated user status if provided
+    if (updated.userId && status) {
+      store.updateUser(updated.userId, { status });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Client updated successfully.',
+      client: updated,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/**
+ * Delete a client
+ */
+export async function deleteClient(req, res) {
+  try {
+    const { id } = req.params;
+    const { clientType } = req.query;
+
+    let deleted = false;
+    if (clientType === 'restaurant' || id.startsWith('rest-')) {
+      deleted = store.deleteRestaurant(id);
+    } else if (clientType === 'receiver' || id.startsWith('recv-')) {
+      deleted = store.deleteReceiver(id);
+    } else if (clientType === 'volunteer' || id.startsWith('vol-')) {
+      deleted = store.deleteVolunteer(id);
+    }
+
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Client not found or already deleted.' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Client deleted successfully.',
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/**
+ * Get aggregated analytics for charts & diagrams
+ */
+export async function getAnalytics(req, res) {
+  try {
+    const analytics = store.getAnalytics();
+    return res.status(200).json({
+      success: true,
+      analytics,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+

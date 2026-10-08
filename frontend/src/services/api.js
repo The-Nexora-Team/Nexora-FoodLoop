@@ -129,6 +129,35 @@ export const adminApi = {
   getInspection: async () => {
     return request('/admin/inspection');
   },
+
+  getClients: async (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return request(`/admin/clients${query ? `?${query}` : ''}`);
+  },
+
+  createClient: async (clientData) => {
+    return request('/admin/clients', {
+      method: 'POST',
+      body: JSON.stringify(clientData),
+    });
+  },
+
+  updateClient: async (id, updates) => {
+    return request(`/admin/clients/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+    });
+  },
+
+  deleteClient: async (id, clientType) => {
+    return request(`/admin/clients/${id}${clientType ? `?clientType=${clientType}` : ''}`, {
+      method: 'DELETE',
+    });
+  },
+
+  getAnalytics: async () => {
+    return request('/admin/analytics');
+  },
 };
 
 // ---- Listings API ----

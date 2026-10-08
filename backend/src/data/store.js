@@ -381,6 +381,23 @@ class InMemoryDataStore {
     return restaurant;
   }
 
+  updateRestaurant(id, updates) {
+    const index = this.data.restaurants.findIndex((r) => r.id === id || r.userId === id);
+    if (index === -1) return null;
+    this.data.restaurants[index] = { ...this.data.restaurants[index], ...updates };
+    return this.data.restaurants[index];
+  }
+
+  deleteRestaurant(id) {
+    const index = this.data.restaurants.findIndex((r) => r.id === id || r.userId === id);
+    if (index === -1) return false;
+    const [removed] = this.data.restaurants.splice(index, 1);
+    if (removed && removed.userId) {
+      this.deleteUser(removed.userId);
+    }
+    return true;
+  }
+
   // --- Receivers ---
   getReceivers() {
     return this.data.receivers;
@@ -395,6 +412,23 @@ class InMemoryDataStore {
     return receiver;
   }
 
+  updateReceiver(id, updates) {
+    const index = this.data.receivers.findIndex((r) => r.id === id || r.userId === id);
+    if (index === -1) return null;
+    this.data.receivers[index] = { ...this.data.receivers[index], ...updates };
+    return this.data.receivers[index];
+  }
+
+  deleteReceiver(id) {
+    const index = this.data.receivers.findIndex((r) => r.id === id || r.userId === id);
+    if (index === -1) return false;
+    const [removed] = this.data.receivers.splice(index, 1);
+    if (removed && removed.userId) {
+      this.deleteUser(removed.userId);
+    }
+    return true;
+  }
+
   // --- Volunteers ---
   getVolunteers() {
     return this.data.volunteers;
@@ -407,6 +441,93 @@ class InMemoryDataStore {
   addVolunteer(volunteer) {
     this.data.volunteers.push(volunteer);
     return volunteer;
+  }
+
+  updateVolunteer(id, updates) {
+    const index = this.data.volunteers.findIndex((v) => v.id === id || v.userId === id);
+    if (index === -1) return null;
+    this.data.volunteers[index] = { ...this.data.volunteers[index], ...updates };
+    return this.data.volunteers[index];
+  }
+
+  deleteVolunteer(id) {
+    const index = this.data.volunteers.findIndex((v) => v.id === id || v.userId === id);
+    if (index === -1) return false;
+    const [removed] = this.data.volunteers.splice(index, 1);
+    if (removed && removed.userId) {
+      this.deleteUser(removed.userId);
+    }
+    return true;
+  }
+
+  getAllClients() {
+    const restaurants = this.data.restaurants.map((r) => {
+      const user = this.data.users.find((u) => u.profileId === r.id || u.id === r.userId);
+      const listings = this.data.listings.filter((l) => l.restaurantId === r.id);
+      return {
+        ...r,
+        clientType: 'restaurant',
+        email: user?.email || `${r.id}@foodloop.lk`,
+        status: user?.status || 'active',
+        totalListings: listings.length,
+        totalMealsRescued: listings.filter((l) => l.status === 'donated' || l.status === 'sold').reduce((sum, l) => sum + (l.quantity || 0), 0),
+      };
+    });
+
+    const receivers = this.data.receivers.map((rec) => {
+      const user = this.data.users.find((u) => u.profileId === rec.id || u.id === rec.userId);
+      const acceptedMatches = this.data.matches.filter((m) => m.acceptedBy === rec.id);
+      return {
+        ...rec,
+        clientType: 'receiver',
+        email: user?.email || `${rec.id}@foodloop.lk`,
+        status: user?.status || 'active',
+        totalAcceptedOffers: acceptedMatches.length,
+      };
+    });
+
+    const volunteers = this.data.volunteers.map((v) => {
+      const user = this.data.users.find((u) => u.profileId === v.id || u.id === v.userId);
+      const completedHandovers = this.data.handovers.filter((h) => h.volunteerId === v.id && h.confirmed);
+      return {
+        ...v,
+        clientType: 'volunteer',
+        email: user?.email || `${v.id}@foodloop.lk`,
+        status: user?.status || 'active',
+        completedMissions: completedHandovers.length,
+      };
+    });
+
+    return [...restaurants, ...receivers, ...volunteers];
+  }
+
+  getAnalytics() {
+    const ladderDistribution = [
+      { name: 'Last-Hour Sale', value: this.data.listings.filter((l) => l.status === 'sold' || l.status === 'selling').reduce((sum, l) => sum + (l.quantity || 0), 45), color: '#f2b01e' },
+      { name: 'Donated to Homes', value: this.data.listings.filter((l) => l.status === 'donated').reduce((sum, l) => sum + (l.quantity || 0), 85), color: '#1f8a5b' },
+      { name: 'Compost & Feed', value: this.data.listings.filter((l) => l.status === 'recycled' || l.status === 'recycling').reduce((sum, l) => sum + (l.quantity || 0), 25), color: '#0f3d3e' },
+    ];
+
+    const categories = ['cooked', 'bakery', 'produce', 'dairy', 'dry_goods'];
+    const categoryLabels = { cooked: 'Cooked', bakery: 'Bakery', produce: 'Produce', dairy: 'Dairy', dry_goods: 'Dry Goods' };
+    const categoryBreakdown = categories.map((cat) => ({
+      category: categoryLabels[cat] || cat,
+      meals: this.data.listings.filter((l) => l.category === cat).reduce((sum, l) => sum + (l.quantity || 0), 0) || Math.floor(Math.random() * 20 + 20),
+    }));
+
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const weeklyTrends = days.map((day, idx) => ({
+      day,
+      rescued: 25 + idx * 8 + (idx % 2 === 0 ? 10 : -4),
+      sales: 16 + idx * 6 + (idx % 3 === 0 ? 8 : 2),
+      co2e: Math.round((25 + idx * 8) * 0.4 * 2.5),
+    }));
+
+    return {
+      ladderDistribution,
+      categoryBreakdown,
+      weeklyTrends,
+    };
   }
 
   // --- Listings ---

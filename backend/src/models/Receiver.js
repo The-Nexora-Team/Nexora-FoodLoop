@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const receiverSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    customId: { type: String, index: true },
+    userId: { type: mongoose.Schema.Types.Mixed },
     name: { type: String, required: true },
     type: {
       type: String,
@@ -22,9 +23,8 @@ const receiverSchema = new mongoose.Schema(
     isRecycler: { type: Boolean, default: false },
     isVerified: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 export const Receiver = mongoose.model('Receiver', receiverSchema);
 export default Receiver;
-

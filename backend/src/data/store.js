@@ -3,6 +3,20 @@ import bcrypt from 'bcryptjs';
 // Precomputed bcrypt hash for 'password123' to make instant startup lightning fast
 const DEMO_PASSWORD_HASH = bcrypt.hashSync('password123', 8);
 
+let persistHooks = {
+  onListing: null,
+  onMatch: null,
+  onHandover: null,
+  onUser: null,
+  onRestaurant: null,
+  onReceiver: null,
+  onVolunteer: null,
+};
+
+export function registerPersistHooks(hooks) {
+  persistHooks = { ...persistHooks, ...hooks };
+}
+
 export function createInitialData() {
   const now = Date.now();
 
@@ -345,6 +359,7 @@ class InMemoryDataStore {
       ...userData,
     };
     this.data.users.push(newUser);
+    persistHooks.onUser?.(newUser);
     return newUser;
   }
 
@@ -356,6 +371,7 @@ class InMemoryDataStore {
     const index = this.data.users.findIndex((u) => u.id === id);
     if (index === -1) return null;
     this.data.users[index] = { ...this.data.users[index], ...updates };
+    persistHooks.onUser?.(this.data.users[index]);
     const { password, ...safeUser } = this.data.users[index];
     return safeUser;
   }
@@ -378,6 +394,7 @@ class InMemoryDataStore {
 
   addRestaurant(restaurant) {
     this.data.restaurants.push(restaurant);
+    persistHooks.onRestaurant?.(restaurant);
     return restaurant;
   }
 
@@ -385,6 +402,7 @@ class InMemoryDataStore {
     const index = this.data.restaurants.findIndex((r) => r.id === id || r.userId === id);
     if (index === -1) return null;
     this.data.restaurants[index] = { ...this.data.restaurants[index], ...updates };
+    persistHooks.onRestaurant?.(this.data.restaurants[index]);
     return this.data.restaurants[index];
   }
 
@@ -409,6 +427,7 @@ class InMemoryDataStore {
 
   addReceiver(receiver) {
     this.data.receivers.push(receiver);
+    persistHooks.onReceiver?.(receiver);
     return receiver;
   }
 
@@ -416,6 +435,7 @@ class InMemoryDataStore {
     const index = this.data.receivers.findIndex((r) => r.id === id || r.userId === id);
     if (index === -1) return null;
     this.data.receivers[index] = { ...this.data.receivers[index], ...updates };
+    persistHooks.onReceiver?.(this.data.receivers[index]);
     return this.data.receivers[index];
   }
 
@@ -440,6 +460,7 @@ class InMemoryDataStore {
 
   addVolunteer(volunteer) {
     this.data.volunteers.push(volunteer);
+    persistHooks.onVolunteer?.(volunteer);
     return volunteer;
   }
 
@@ -447,6 +468,7 @@ class InMemoryDataStore {
     const index = this.data.volunteers.findIndex((v) => v.id === id || v.userId === id);
     if (index === -1) return null;
     this.data.volunteers[index] = { ...this.data.volunteers[index], ...updates };
+    persistHooks.onVolunteer?.(this.data.volunteers[index]);
     return this.data.volunteers[index];
   }
 
@@ -541,6 +563,7 @@ class InMemoryDataStore {
 
   addListing(listing) {
     this.data.listings.unshift(listing);
+    persistHooks.onListing?.(listing);
     return listing;
   }
 
@@ -548,6 +571,7 @@ class InMemoryDataStore {
     const index = this.data.listings.findIndex((l) => l.id === id);
     if (index === -1) return null;
     this.data.listings[index] = { ...this.data.listings[index], ...updates };
+    persistHooks.onListing?.(this.data.listings[index]);
     return this.data.listings[index];
   }
 
@@ -562,6 +586,7 @@ class InMemoryDataStore {
 
   addMatch(match) {
     this.data.matches.unshift(match);
+    persistHooks.onMatch?.(match);
     return match;
   }
 
@@ -569,6 +594,7 @@ class InMemoryDataStore {
     const index = this.data.matches.findIndex((m) => m.id === id);
     if (index === -1) return null;
     this.data.matches[index] = { ...this.data.matches[index], ...updates };
+    persistHooks.onMatch?.(this.data.matches[index]);
     return this.data.matches[index];
   }
 
@@ -583,6 +609,7 @@ class InMemoryDataStore {
 
   addHandover(handover) {
     this.data.handovers.unshift(handover);
+    persistHooks.onHandover?.(handover);
     return handover;
   }
 
@@ -590,6 +617,7 @@ class InMemoryDataStore {
     const index = this.data.handovers.findIndex((h) => h.id === id);
     if (index === -1) return null;
     this.data.handovers[index] = { ...this.data.handovers[index], ...updates };
+    persistHooks.onHandover?.(this.data.handovers[index]);
     return this.data.handovers[index];
   }
 

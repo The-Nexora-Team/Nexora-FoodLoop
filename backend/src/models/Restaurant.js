@@ -12,7 +12,8 @@ const templateSchema = new mongoose.Schema({
 
 const restaurantSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    customId: { type: String, index: true },
+    userId: { type: mongoose.Schema.Types.Mixed },
     name: { type: String, required: true },
     area: { type: String, required: true },
     cuisine: { type: String, default: 'Various' },
@@ -21,9 +22,8 @@ const restaurantSchema = new mongoose.Schema(
     templates: [templateSchema],
     isVerified: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 export const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 export default Restaurant;
-

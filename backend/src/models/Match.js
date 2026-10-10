@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const matchSchema = new mongoose.Schema(
   {
+    customId: { type: String, index: true },
     listingId: { type: String, required: true },
     rankedReceivers: [
       {
@@ -31,9 +32,8 @@ const matchSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 export const Match = mongoose.model('Match', matchSchema);
 export default Match;
-

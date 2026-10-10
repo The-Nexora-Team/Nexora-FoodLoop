@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const handoverSchema = new mongoose.Schema(
   {
+    customId: { type: String, index: true },
     matchId: { type: String, required: true },
     listingId: { type: String, required: true },
     volunteerId: { type: String, required: true },
@@ -14,9 +15,8 @@ const handoverSchema = new mongoose.Schema(
     confirmed: { type: Boolean, default: false },
     deliveryFeeLKR: { type: Number, default: 220 },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 export const Handover = mongoose.model('Handover', handoverSchema);
 export default Handover;
-

@@ -10,12 +10,13 @@ export async function connectDB() {
   }
 
   try {
-    // Attempt fast connection with 2-second timeout so it never blocks or hangs
+    // 5-second timeout for cloud Atlas connections
     await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 2000,
+      serverSelectionTimeoutMS: 5000,
     });
     isMongoConnected = true;
-    console.log('✅ [DB] Connected to MongoDB at:', uri);
+    const sanitizedUri = uri.replace(/\/\/[^:]+:[^@]+@/, '//***:***@');
+    console.log('✅ [DB] Connected to MongoDB Atlas at:', sanitizedUri);
     return true;
   } catch (error) {
     console.warn('⚠️  [DB] MongoDB not detected or reachable (' + error.message + ').');
@@ -27,4 +28,3 @@ export async function connectDB() {
 export function isConnected() {
   return isMongoConnected;
 }
-

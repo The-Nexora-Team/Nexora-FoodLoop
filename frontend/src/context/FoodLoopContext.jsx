@@ -22,6 +22,7 @@ function loadPersistedState() {
         ...generateSeedData(),
         ...parsed,
         simNow: Date.now(),
+        speed: 1, // Always default to 1x real-time clock
       };
     }
   } catch (e) {

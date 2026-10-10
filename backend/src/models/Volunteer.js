@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const volunteerSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    customId: { type: String, index: true },
+    userId: { type: mongoose.Schema.Types.Mixed },
     name: { type: String, required: true },
     vehicle: { type: String, default: 'Motorbike / Scooter' },
     area: { type: String, required: true },
@@ -16,9 +17,8 @@ const volunteerSchema = new mongoose.Schema(
     available: { type: Boolean, default: true },
     isVerified: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 export const Volunteer = mongoose.model('Volunteer', volunteerSchema);
 export default Volunteer;
-

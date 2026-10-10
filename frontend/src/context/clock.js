@@ -24,6 +24,9 @@ export function createDemoClock(onTick) {
   let simOffset = 0;
 
   function getSimNow() {
+    if (speed === 1) {
+      return Date.now();
+    }
     const realElapsed = Date.now() - simEpoch;
     return simEpoch + simOffset + realElapsed * speed;
   }

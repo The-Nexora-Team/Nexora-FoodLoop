@@ -207,46 +207,113 @@ export function foodLoopReducer(state, action) {
       if (remainingQty > 0 && listing) {
         // Create an allocated donation listing for the requested quantity
         const allocatedListingId = 'alloc-' + Date.now();
+        const handoverId = 'handover-' + Date.now();
+        const availableVolunteer = state.volunteers.find((v) => v.available) || state.volunteers[0] || { id: 'vol-001', name: 'Kasun Perera' };
+
         const allocatedListing = {
           ...listing,
           id: allocatedListingId,
           quantity: claimedQty,
+          remainingQuantity: 0,
+          originalTotalQuantity: listing.originalTotalQuantity || totalQty,
           status: LISTING_STATUS.DONATING,
           currentStep: 'donate',
           matchId,
+          handoverId,
+          isClaimedBatch: true,
+          claimedByReceiverId: receiverId,
+          claimedPortions: claimedQty,
+          originalListingId: listing.id,
+        };
+
+        const newHandover = {
+          id: handoverId,
+          matchId,
+          listingId: allocatedListingId,
+          volunteerId: availableVolunteer.id,
+          receiverId,
+          claimedAt: state.simNow || Date.now(),
+          pickedUpAt: null,
+          deliveredAt: null,
+          temperatureCheck: null,
+          deliveryNotes: '',
+          confirmed: false,
+          deliveryFeeLKR: 340,
         };
 
         // Update match to point to allocated listing
         updatedMatches = updatedMatches.map((m) =>
-          m.id === matchId ? { ...m, listingId: allocatedListingId } : m
+          m.id === matchId ? { ...m, listingId: allocatedListingId, handoverId } : m
         );
 
         // Keep remaining quantity on original listing active for other shelters / sales!
         updatedListings = state.listings.map((l) =>
           l.id === listing.id
-            ? { ...l, quantity: remainingQty }
+            ? {
+                ...l,
+                quantity: remainingQty,
+                remainingQuantity: remainingQty,
+                originalTotalQuantity: l.originalTotalQuantity || totalQty,
+              }
             : l
         ).concat(allocatedListing);
+
+        return {
+          ...state,
+          matches: updatedMatches,
+          listings: updatedListings,
+          handovers: [newHandover, ...state.handovers.filter((h) => h.matchId !== matchId)],
+        };
       } else {
         // Entire batch was requested
+        const handoverId = 'handover-' + Date.now();
+        const availableVolunteer = state.volunteers.find((v) => v.available) || state.volunteers[0] || { id: 'vol-001', name: 'Kasun Perera' };
+        const targetListingId = match ? match.listingId : listing?.id;
+
+        const newHandover = {
+          id: handoverId,
+          matchId,
+          listingId: targetListingId,
+          volunteerId: availableVolunteer.id,
+          receiverId,
+          claimedAt: state.simNow || Date.now(),
+          pickedUpAt: null,
+          deliveredAt: null,
+          temperatureCheck: null,
+          deliveryNotes: '',
+          confirmed: false,
+          deliveryFeeLKR: 340,
+        };
+
+        updatedMatches = updatedMatches.map((m) =>
+          m.id === matchId ? { ...m, handoverId } : m
+        );
+
         updatedListings = state.listings.map((l) => {
           if (match && l.id === match.listingId) {
             return {
               ...l,
               quantity: claimedQty,
+              remainingQuantity: 0,
+              originalTotalQuantity: l.originalTotalQuantity || totalQty,
               status: LISTING_STATUS.DONATING,
               currentStep: 'donate',
+              isClaimedBatch: true,
+              claimedByReceiverId: receiverId,
+              claimedPortions: claimedQty,
+              handoverId,
             };
           }
           return l;
         });
-      }
 
-      return {
-        ...state,
-        matches: updatedMatches,
-        listings: updatedListings,
-      };
+        return {
+          ...state,
+          matches: updatedMatches,
+          listings: updatedListings,
+          handovers: [newHandover, ...state.handovers.filter((h) => h.matchId !== matchId)],
+        };
+      }
     }
 
     case ACTION_TYPES.DECLINE_MATCH: {

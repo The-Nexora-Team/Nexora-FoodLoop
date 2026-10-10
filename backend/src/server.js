@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { connectDB } from './config/db.js';
+import { initDatabase } from './services/dbSync.js';
 
 // Route imports
 import authRoutes from './routes/authRoutes.js';
@@ -67,6 +68,7 @@ app.use((err, req, res, next) => {
 async function startServer() {
   // Attempt DB connection (non-blocking, falls back immediately if Mongo not active)
   await connectDB();
+  await initDatabase();
 
   app.listen(PORT, () => {
     console.log(`\n=================================================`);
@@ -82,4 +84,3 @@ async function startServer() {
 }
 
 startServer();
-

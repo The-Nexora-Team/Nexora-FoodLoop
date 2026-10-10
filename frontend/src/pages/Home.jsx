@@ -9,17 +9,41 @@ export default function Home() {
   const impact = calculateTotalImpact(state.listings, state.handovers, state.volunteers);
 
   return (
-    <div className="home page-animate">
+    <div className="home">
+      {/* Full-Page Luminous Animated Aurora & Floating Particle Canvas */}
+      <div className="fullpage-bg-anim-container" aria-hidden="true">
+        <div className="fullpage-grid-pattern" />
+        <div className="fullpage-glow-orb orb-top-emerald" />
+        <div className="fullpage-glow-orb orb-top-gold" />
+        <div className="fullpage-glow-orb orb-mid-cyan" />
+        <div className="fullpage-glow-orb orb-mid-teal" />
+        <div className="fullpage-glow-orb orb-center-amber" />
+        <div className="fullpage-glow-orb orb-bottom-emerald" />
+        <div className="fullpage-glow-orb orb-bottom-gold" />
+        <div className="fullpage-light-sweep" />
+        <div className="fullpage-particle fp-1" />
+        <div className="fullpage-particle fp-2" />
+        <div className="fullpage-particle fp-3" />
+        <div className="fullpage-particle fp-4" />
+        <div className="fullpage-particle fp-5" />
+        <div className="fullpage-particle fp-6" />
+        <div className="fullpage-particle fp-7" />
+        <div className="fullpage-particle fp-8" />
+        <div className="fullpage-particle fp-9" />
+        <div className="fullpage-particle fp-10" />
+        <div className="fullpage-particle fp-11" />
+        <div className="fullpage-particle fp-12" />
+      </div>
+
       {/* Top Navbar */}
       <nav className="navbar">
-        <div className="logo-container">
-        <img
-          src="/images/logo-icon.png"
-          alt="FoodLoop Logo"
-          className="logo-icon"
-        />
-        <h2 className="logo">FoodLoop</h2>
-      </div>
+        <Link to="/" className="logo-container" aria-label="FoodLoop Home">
+          <img
+            src="/images/logo-icon.png"
+            alt="FoodLoop Logo"
+            className="logo-icon"
+          />
+        </Link>
 
         <div className="nav-links">
           <Link to="/">Home</Link>
@@ -30,6 +54,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="hero">
+
         <div className="hero-grid">
           <div className="hero-content">
             <div className="hero-badge">
@@ -168,7 +193,7 @@ export default function Home() {
         </div>
 
         <div className="steps">
-          <div className="step-card-visual">
+          <div className="step-card-visual persona-restaurant">
             <div className="step-photo-wrap">
               <img src="/images/biryani.jpg" alt="Commercial Kitchen Surplus" className="step-photo" />
               <div className="step-photo-badge">🍽️ RESTAURANTS & HOTELS</div>
@@ -182,7 +207,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="step-card-visual">
+          <div className="step-card-visual persona-receiver">
             <div className="step-photo-wrap">
               <img src="/images/community-shelter.jpg" alt="Community Meal Sharing" className="step-photo" />
               <div className="step-photo-badge">🏠 CHARITIES & SHELTERS</div>
@@ -196,7 +221,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="step-card-visual">
+          <div className="step-card-visual persona-courier">
             <div className="step-photo-wrap">
               <img src="/images/courier-scooter.jpg" alt="FoodLoop Courier in Colombo" className="step-photo" />
               <div className="step-photo-badge">🛵 RESCUE COURIERS</div>

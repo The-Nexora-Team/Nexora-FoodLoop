@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const listingSchema = new mongoose.Schema(
   {
+    customId: { type: String, index: true },
     restaurantId: { type: String, required: true },
     restaurantName: { type: String, required: true },
     foodName: { type: String, required: true },
@@ -38,9 +39,8 @@ const listingSchema = new mongoose.Schema(
     matchId: { type: String, default: null },
     volunteerId: { type: String, default: null },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 export const Listing = mongoose.model('Listing', listingSchema);
 export default Listing;
-

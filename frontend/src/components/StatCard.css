@@ -1,17 +1,19 @@
 .stat-card-fl {
   background: var(--fl-bg-raised);
-  border: 1px solid var(--fl-border);
+  border: 2px solid rgba(31, 138, 91, 0.25);
+  border-top: 4px solid #1f8a5b;
   border-radius: var(--fl-radius-lg);
   padding: var(--fl-space-lg);
   display: flex;
   align-items: flex-start;
   gap: var(--fl-space-md);
-  transition: box-shadow var(--fl-transition), transform var(--fl-transition);
+  transition: box-shadow var(--fl-transition), transform var(--fl-transition), border-color var(--fl-transition);
 }
 
 .stat-card-fl:hover {
-  box-shadow: 0 4px 16px var(--fl-shadow);
-  transform: translateY(-2px);
+  border-color: #1f8a5b;
+  box-shadow: 0 10px 24px rgba(31, 138, 91, 0.15);
+  transform: translateY(-3px);
 }
 
 .stat-card-icon {
@@ -54,21 +56,49 @@
 }
 
 /* Variants */
+.stat-card-success {
+  border-color: rgba(31, 138, 91, 0.35);
+  border-top-color: #1f8a5b;
+}
 .stat-card-success .stat-card-icon {
   background: var(--fl-urgency-safe-bg);
   color: var(--fl-green);
 }
 
+.stat-card-warning {
+  border-color: rgba(245, 158, 11, 0.4);
+  border-top-color: #f59e0b;
+}
+.stat-card-warning:hover {
+  border-color: #f59e0b;
+  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.2);
+}
 .stat-card-warning .stat-card-icon {
   background: var(--fl-urgency-warning-bg);
   color: var(--fl-gold);
 }
 
+.stat-card-danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  border-top-color: #ef4444;
+}
+.stat-card-danger:hover {
+  border-color: #ef4444;
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.2);
+}
 .stat-card-danger .stat-card-icon {
   background: var(--fl-urgency-critical-bg);
   color: var(--fl-red);
 }
 
+.stat-card-gold {
+  border-color: rgba(242, 176, 30, 0.4);
+  border-top-color: #f2b01e;
+}
+.stat-card-gold:hover {
+  border-color: #f2b01e;
+  box-shadow: 0 10px 24px rgba(242, 176, 30, 0.2);
+}
 .stat-card-gold .stat-card-icon {
   background: rgba(242, 176, 30, 0.12);
   color: var(--fl-gold);

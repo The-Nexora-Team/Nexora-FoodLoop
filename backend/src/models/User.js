@@ -40,12 +40,16 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    customId: {
+      type: String,
+      index: true,
+    },
   },
   {
     timestamps: true,
+    strict: false,
   }
 );
 
 export const User = mongoose.model('User', userSchema);
 export default User;
-

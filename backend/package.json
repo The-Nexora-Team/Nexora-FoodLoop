@@ -22,7 +22,6 @@
     "dotenv": "^17.3.1",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5",
-    "nexora-foodloop": "file:.."
+    "mongoose": "^8.9.5"
   }
 }

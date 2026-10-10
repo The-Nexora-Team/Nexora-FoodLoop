@@ -28,4 +28,3 @@ export async function connectDB() {
 export function isConnected() {
   return isMongoConnected;
 }
-

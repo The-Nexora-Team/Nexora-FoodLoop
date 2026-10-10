@@ -22,4 +22,3 @@ const volunteerSchema = new mongoose.Schema(
 
 export const Volunteer = mongoose.model('Volunteer', volunteerSchema);
 export default Volunteer;
-

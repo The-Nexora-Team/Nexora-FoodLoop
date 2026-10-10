@@ -28,4 +28,3 @@ const receiverSchema = new mongoose.Schema(
 
 export const Receiver = mongoose.model('Receiver', receiverSchema);
 export default Receiver;
-

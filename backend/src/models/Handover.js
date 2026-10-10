@@ -20,4 +20,3 @@ const handoverSchema = new mongoose.Schema(
 
 export const Handover = mongoose.model('Handover', handoverSchema);
 export default Handover;
-

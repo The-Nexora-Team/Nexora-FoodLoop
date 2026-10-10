@@ -1,0 +1,169 @@
+/* DonationReceipt.css — official tax voucher and printable styles */
+
+.receipt-page {
+  padding: 2rem 1rem;
+}
+
+.receipt-voucher-card {
+  background: #ffffff;
+  color: #111827;
+  border-radius: var(--fl-radius-xl);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  padding: 2.5rem;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.receipt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #0f3d3e;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.receipt-seal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.receipt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.receipt-entity-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.receipt-box-label {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.receipt-box-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.receipt-box-text {
+  font-size: 0.8125rem;
+  color: #4b5563;
+  margin: 2px 0;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.875rem;
+}
+
+.receipt-table th,
+.receipt-table td {
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.receipt-table th {
+  background: #f3f4f6;
+  font-weight: 700;
+  color: #374151;
+}
+
+.receipt-total-row {
+  background: #f8fafc;
+  font-weight: 800;
+  color: #0f3d3e;
+}
+
+.receipt-tax-clause {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  font-size: 0.75rem;
+  color: #166534;
+  line-height: 1.5;
+}
+
+.receipt-signatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.receipt-sign-line {
+  border-top: 1px solid #9ca3af;
+  padding-top: 6px;
+  font-size: 0.75rem;
+  color: #4b5563;
+  text-align: center;
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 15mm 15mm 15mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .app-nav,
+  .no-print,
+  .skip-link {
+    display: none !important;
+  }
+
+  .receipt-page,
+  .app-layout,
+  .app-main,
+  .fl-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .receipt-voucher-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
